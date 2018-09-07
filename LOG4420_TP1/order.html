@@ -5,6 +5,87 @@
   <title>OnlineShop - Commande</title>
 </head>
 <body>
-<!-- TODO -->
+  <header>
+    <a href="index.html">
+      <img src="assets/img/logo.svg" alt="home">
+    </a>
+
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="products.html">Produits</a>
+      <a href="contact.html">Contact</a>
+      <a href="shopping-cart.html">Panier</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Commandez</h1>
+    
+    <form action="confirmation.html">
+      <fieldset>
+        <legend>Contact</legend>
+        <label for="first-name">Prénom</label>
+        <input type="text" name="first-name" id="first-name" required>
+
+        <label for="last-name">Nom</label>
+        <input type="text" name="last-name" id="last-name" required>
+        
+        <label for="email">Adresse courriel</label>
+        <input type="email" name="email" id="email" required>
+
+        <label for="phone">Numéro de téléphone</label>
+        <input type="tel" name="phone" id="phone" pattern="[0-9]*" required>
+      </fieldset>
+
+      <fieldset>
+        <legend>Paiement</legend>
+        <label for="credit-card">Numéro de carte de crédit</label>
+        <input type="text" name="credit-card" id="credit-card" pattern="[0-9]{16}" maxlength="16" required>
+
+
+        <div id="credit-card-expiry">
+          <label for="month">
+            Date d'expiration
+            <select name="month" id="month">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+          </label>
+
+          <select name="year">
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+            <option value="2029">2029</option>
+            <option value="2030">2030</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <input type="submit" value="Payer">
+    </form>
+  </main>
+
+  <footer>
+    <p>Travail réalisé par Gregory Fournier(1624509) et Laurent Hénault-Brunet(1749295)</p>
+  </footer>
 </body>
 </html>
