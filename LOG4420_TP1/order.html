@@ -43,24 +43,23 @@
         <input type="text" name="credit-card" id="credit-card" pattern="[0-9]{16}" maxlength="16" required>
 
 
+        <!--Done like this on purpose instead of <input type="month"> since this method is more like the standard on see on websites -->
         <div id="credit-card-expiry">
-          <label for="month">
-            Date d'expiration
-            <select name="month" id="month">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-            </select>
-          </label>
+          <label for="month">Date d'expiration</label>
+          <select name="month">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
 
           <select name="year">
             <option value="2018">2018</option>
