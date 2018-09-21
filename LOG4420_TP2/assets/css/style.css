@@ -226,6 +226,7 @@ aside {
     border: 1px solid #999999;
     width: 100%;
     text-align: center;
+    border-radius: 4px;
 }
 
 .flex-contact-element {
