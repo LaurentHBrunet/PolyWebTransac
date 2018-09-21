@@ -98,6 +98,7 @@ header a.active {
     background-color: #1fb5e9;
     transition-timing-function: ease-out;
     transition: background-color 0.2s;
+    cursor: pointer;
 }
 
 #home-image {
@@ -183,6 +184,17 @@ aside {
     flex-direction: row;
 }
 
+.parent {
+    display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.child {
+    width: 50%;
+}
+
 .product-container p,
 .product-container img,
 .product-container h2 {
@@ -237,6 +249,106 @@ aside {
 .flex-contact-element span.fa-stack {
     margin: auto;
     font-size: 50px;
+}
+
+.small-item {
+    flex: 1 0 0;
+}
+
+.form-control {
+    border: 1px solid #999999;
+    border-radius: 4px;
+}
+
+.divider {
+    margin-top: 20px;
+    margin-bottom: 20px
+}
+
+.strech {
+    width: 100%;
+    align-content: stretch;
+    align-items: stretch;
+    justify-content: center;
+    ;
+}
+
+.spread {
+    justify-content: space-between;
+}
+
+.end {
+    justify-content: flex-end;
+}
+
+.shopping-cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.shopping-cart-table td:first-child {
+    width: 30px;
+    padding-right: 20px;
+}
+
+.shopping-cart-table button {
+    border-radius: 80px;
+    background-color: #dddddd;
+    padding: 2px 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 8px 4px;
+}
+
+.shopping-cart-table button:hover {
+    background-color: #bbbbbb;
+}
+
+.shopping-cart-total {
+    width: 100%;
+    text-align: end;
+    margin: 30px 2px;
+}
+
+td:last-child {
+    text-align: end;
+}
+
+.table-header td,
+.table-footer td {
+    border-bottom-style: solid;
+    border-bottom-color: #000000;
+    border-bottom-width: 1px;
+}
+
+.table-header td {
+    font-weight: bold;
+}
+
+.order-form button {
+    margin-top: 15px;
+    margin-right: 30px;
+}
+
+.order-form legend {
+    font-size: 30px;
+    font-weight: bold;
+    padding-top: 30px;
+    margin-bottom: 18px;
+}
+
+.order-form label {
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+.order-form input {
+    margin-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 
