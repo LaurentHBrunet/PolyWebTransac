@@ -184,6 +184,17 @@ aside {
     flex-direction: row;
 }
 
+.parent {
+    display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.child {
+    width: 50%;
+}
+
 .product-container p,
 .product-container img,
 .product-container h2 {
@@ -266,6 +277,10 @@ aside {
     justify-content: space-between;
 }
 
+.end {
+    justify-content: flex-end;
+}
+
 .shopping-cart-table {
     width: 100%;
     border-collapse: collapse;
@@ -311,6 +326,29 @@ td:last-child {
 
 .table-header td {
     font-weight: bold;
+}
+
+.order-form button {
+    margin-top: 15px;
+    margin-right: 30px;
+}
+
+.order-form legend {
+    font-size: 30px;
+    font-weight: bold;
+    padding-top: 30px;
+    margin-bottom: 18px;
+}
+
+.order-form label {
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+.order-form input {
+    margin-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 
