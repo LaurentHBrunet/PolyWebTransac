@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <title>OnlineShop - Panier</title>
   <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 </head>
+
 <body>
   <header>
     <a href="index.html">
@@ -22,8 +24,8 @@
 
   <main>
     <h1>Panier</h1>
-    <table>
-      <tr>
+    <table class="shopping-cart-table">
+      <tr class="table-header">
         <td></td>
         <td>Nom</td>
         <td>Prix unitaire</td>
@@ -44,7 +46,7 @@
         <td><button>-</button>2<button>+</button></td>
         <td>5999.98 $</td>
       </tr>
-      <tr>
+      <tr class="table-footer">
         <td><button>X</button></td>
         <td><a href="product.html">Nikon D7000</a></td>
         <td>549.99 $</td>
@@ -53,14 +55,17 @@
       </tr>
     </table>
 
-    
-    <p>Total: 7949.94 $</p>
-    <button>Vider le panier</button>
-    <a href="order.html">Commander</a>
+
+    <p class="shopping-cart-total">Total: <strong>7949.94 $</strong></p>
+    <div class="flex-horizontal spread">
+      <a class="btn"><i class="fa fa-trash"></i> Vider le panier</a>
+      <a href="order.html" class="btn"">Commander <i class=" fa fa-angle-double-right"></i></a>
+    </div>
   </main>
 
   <footer>
     <p>Travail réalisé par Gregory Fournier(1624509) et Laurent Hénault-Brunet(1749295)</p>
   </footer>
 </body>
+
 </html>
