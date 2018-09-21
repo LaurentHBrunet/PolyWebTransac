@@ -8,24 +8,48 @@
 </head>
 <body>
   <header>
-    <a href="index.html">
-      <img src="assets/img/logo.svg" alt="home">
-    </a>
-
-    <nav>
-      <a href="index.html">Accueil</a>
-      <a href="products.html">Produits</a>
-      <a href="contact.html">Contact</a>
-      <a href="shopping-cart.html">Panier</a>
-    </nav>
+    <div class="header-container">
+      <div class="home-button">
+        <a href="index.html">
+          <img src="assets/img/logo.svg" alt="home">
+        </a>
+      </div>
+      <nav class="nav-div">
+        <a href="index.html">Accueil</a>
+        <a href="products.html">Produits</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a class="shopping-cart" href="./shopping-cart.html" title="Panier">
+          <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+            <i class="fa fa-shopping-cart fa-stack-1x"></i>
+          </span>
+          <span class="count">3</span>
+        </a>
+      </nav>
+    </div>
   </header>
 
   <main>
     <h1>Nous contacter</h1>
-    <address>
-      Courriel : <a href="mailto:fakeAddress@companydomain.com">fakeAddress@companydomain.com</a><br/>
-      Téléphone : <a href="tel:5555555555">555 555-5555</a><br/>
-      123 rue Imaginaire, Montreal, Quebec, Canada, 1A1 A1A
+    <address class="contact-container flex-horizontal">
+      <div class="flex-contact-element flex-vertical">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-envelope fa-stack-1x"></i>
+        </span>
+        <a href="mailto:fakeAddress@companydomain.com">fakeAddress@companydomain.com</a>
+      </div>
+      <div class="flex-contact-element flex-vertical">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-mobile-alt fa-stack-1x"></i>
+        </span>
+        <a href="tel:5555555555">555 555-5555</a>
+      </div>
+      <div class="flex-contact-element">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-map-marker-alt fa-stack-1x"></i>
+        </span>
+        <p>123 rue Imaginaire, Montreal, Quebec, Canada, 1A1 A1A</p>
+      </div>
     </address>
     
   </main>

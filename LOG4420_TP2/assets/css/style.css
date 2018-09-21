@@ -15,13 +15,17 @@ main {
     max-width: 1200px;
     padding: 50px 20px 50px 20px;
     flex: 1 0 auto;
-    margin: auto;
+    align-self: center;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+h1 {
+    padding-bottom: 20px;
 }
 
 header {
     height: 60px;
-    padding-left: 20px;
-    padding-right: 20px;
     background-color: #14597f;
     border: 1px solid #0b2d3d;
 }
@@ -34,6 +38,7 @@ footer {
     border-top: 1px solid #cccccc;
     background-color: #eeeeee;
     flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 .header-container {
@@ -41,6 +46,8 @@ footer {
     justify-content: space-between;
     align-items: center;
     max-width: 1200px;
+    padding-left: 20px;
+    padding-right: 20px;
     margin:auto;
 }
 
@@ -214,6 +221,23 @@ aside {
     justify-content: space-between;
     flex-wrap: wrap;
 }
+
+.contact-container {
+    border: 1px solid #999999;
+    width: 100%;
+    text-align: center;
+}
+
+.flex-contact-element {
+    flex: 1 0 0;
+    padding: 10px;
+}
+
+.flex-contact-element span.fa-stack {
+    margin: auto;
+    font-size: 50px;
+}
+
 
 
 
