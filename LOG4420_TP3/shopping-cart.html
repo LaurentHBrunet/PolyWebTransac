@@ -6,6 +6,7 @@
   <title>OnlineShop - Panier</title>
   <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+  <script type="text/javascript" src="./assets/js/jquery-3.2.1.min.js"></script>
 </head>
 
 <body>
@@ -25,7 +26,7 @@
             <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
             <i class="fa fa-shopping-cart fa-stack-1x"></i>
           </span>
-          <span class="count">3</span>
+          <span id="count" class="count"></span>
         </a>
       </nav>
     </div>
@@ -41,34 +42,16 @@
         <td>Quantié</td>
         <td>Prix</td>
       </tr>
-      <tr>
-        <td><button>X</button></td>
-        <td><a href="product.html">Apple TV</a></td>
-        <td>299.99 $</td>
-        <td><button>-</button>1<button>+</button></td>
-        <td>299.99 $</td>
-      </tr>
-      <tr>
-        <td><button>X</button></td>
-        <td><a href="product.html">Canon EOS 5D Mark II</a></td>
-        <td>2999.99 $</td>
-        <td><button>-</button>2<button>+</button></td>
-        <td>5999.98 $</td>
-      </tr>
-      <tr class="table-footer">
-        <td><button>X</button></td>
-        <td><a href="product.html">Nikon D7000</a></td>
-        <td>549.99 $</td>
-        <td><button>-</button>3<button>+</button></td>
-        <td>1649.97 $</td>
-      </tr>
+
     </table>
 
 
-    <p class="shopping-cart-total">Total: <strong>7949.94 $</strong></p>
-    <div class="flex-horizontal spread">
-      <a class="btn"><i class="fa fa-trash"></i> Vider le panier</a>
-      <a href="order.html" class="btn"">Commander <i class=" fa fa-angle-double-right"></i></a>
+    <div class="shopping-cart-footer">
+      <p class="shopping-cart-total"></p>
+      <div class="flex-horizontal spread shopping-cart-footer"">
+        <a id="remove-all-items-button" class="btn"><i class="fa fa-trash"></i> Vider le panier</a>
+        <a href="order.html" class="btn"">Commander <i class=" fa fa-angle-double-right"></i></a>
+      </div>
     </div>
   </main>
 
@@ -76,5 +59,7 @@
     <p>Travail réalisé par Gregory Fournier(1624509) et Laurent Hénault-Brunet(1749295)</p>
   </footer>
 </body>
+<script type="text/javascript" src="./assets/js/header.js"></script>
+<script type="text/javascript" src="./assets/js/shopping-cart.js"></script>
 
 </html>

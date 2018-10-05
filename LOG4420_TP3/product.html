@@ -6,6 +6,7 @@
   <title>OnlineShop - Produit</title>
   <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+  <script type="text/javascript" src="./assets/js/jquery-3.2.1.min.js"></script>
 </head>
 
 <body>
@@ -25,37 +26,27 @@
             <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
             <i class="fa fa-shopping-cart fa-stack-1x"></i>
           </span>
-          <span class="count">3</span>
+          <span id="count" class="count"></span>
         </a>
       </nav>
     </div>
   </header>
 
   <main>
-    <h1>Apple TV</h1>
+    <h1 id = "product-name"></h1>
     <div class="flex-horizontal">
-      <img src="assets/img/apple-tv.png" alt="apple-tv" class="flex-vertical small-item">
+      <img src="" alt="" id="product-image" class="flex-vertical small-item">
       <div class="flex-vertical small-item">
         <h1>Description</h1>
-        <p>L'Apple TV est un appareil conçu par Apple qui permet la communication sans fil entre un ordinateur et un
-          téléviseur. Il est disponible depuis fin mars 2007 dans sa première version.L'appareil ressemble alors par sa
-          forme à un Mac mini, bien qu'il ne fasse que la moitié de sa hauteur. Il communique par réseau sans fil ou
-          Ethernet, avec un appareil iOS ou avec un ordinateur (sous Mac OS X ou sous Windows) par le biais du logiciel
-          iTunes, permettant ainsi de diffuser le contenu vidéo et audio sur le téléviseur, via éventuellement un
-          amplificateur audio-vidéo. (<a href='https://fr.wikipedia.org/wiki/Apple_TV' target='_blank'>Wikipédia</a>),
+        <p id="product-desc">
         </p>
         <h1> Charactéristiques</h1>
-        <ul>
-          <li>Processeur Apple A8</li>
-          <li>Mémoire vide de 2Go</li>
-          <li>Stockage de 32 ou 64 Go en mémoire flash</li>
-          <li>Connectivités: USB Type-C, HDMI, récepteur infrarouge</li>
-          <li>Réseau: Wi-Fi (802.11a/b/g/n/ac), 10/100 Ethernet, Bluetooth, AirPla</li>
+        <ul id="product-features">
         </ul>
         <hr class="divider">
         <div class="flex-horizontal spread">
-          <p class="strech flex75">Prix: <strong>249.99$</strong></p>
-          <form class="flex-horizontal">
+          <p id="product-price" class="strech flex75"></p>
+          <form id="add-to-cart-form" class="flex-horizontal">
             <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control">
             <button type="submit" value="Ajouter" class="btn">
               <i class="fa fa-shopping-cart" /> Ajouter</i>
@@ -68,6 +59,7 @@
   <footer>
     <p>Travail réalisé par Gregory Fournier(1624509) et Laurent Hénault-Brunet(1749295)</p>
   </footer>
+  <script type="text/javascript" src="./assets/js/product.js"></script>
+  <script type="text/javascript" src="./assets/js/header.js"></script>
 </body>
-
 </html>
