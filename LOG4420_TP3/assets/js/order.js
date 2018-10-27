@@ -68,6 +68,8 @@ $("#order-form").submit(() => {
         } else {
             localStorage.orderCount = 1;
         }
+
+        localStorage.lastOrderName = $("#first-name").val() +" "+$("#last-name").val();
     }
 });
 
