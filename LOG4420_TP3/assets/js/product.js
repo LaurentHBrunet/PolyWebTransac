@@ -44,6 +44,15 @@ $(document).ready(function() {
         }
         localStorage.setItem(CART,JSON.stringify(cart));
         updateCartBadge();
-        alert(localStorage.getItem(CART));
+
+        showProductAddedSnackbar();
+        //alert(localStorage.getItem(CART));
     });
 })
+
+function showProductAddedSnackbar() {
+    var snackbar = document.getElementById("dialog");
+    snackbar.className = "show";
+    setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+}
+

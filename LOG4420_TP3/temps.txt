@@ -1,1 +1,8 @@
 Deux membres : 5h
+
+todo : 
+3.3.4.2 ordoner la liste dans le panier
+liste de produits affichage weird s'il y a deux éléments sur la dernière ligne 3.3.2
+obtenir nom pour confirmation
+
+

@@ -7,6 +7,9 @@
   <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
   <script type="text/javascript" src="./assets/js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="./assets/js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="./assets/js/additional-methods.min.js"></script>
+  <script type="text/javascript" src="./assets/js/messages_fr.js"></script>
 </head>
 
 <body>
@@ -26,7 +29,7 @@
             <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
             <i class="fa fa-shopping-cart fa-stack-1x"></i>
           </span>
-          <span class="count">3</span>
+          <span id="count" class="count">3</span>
         </a>
       </nav>
     </div>
@@ -35,30 +38,29 @@
   <main>
     <h1>Commande</h1>
 
-    <form action="confirmation.html" class="order-form">
+    <form action="confirmation.html" id="order-form" method="POST">
       <legend>Contact</legend>
       <div class="flex-horizontal strech">
         <div class="flex-vertical strech">
           <label for="first-name">Prénom</label>
-          <input type="text" name="first-name" id="first-name" placeholder="Prénom" class="form-control" required>
+          <input type="text" name="first-name" id="first-name" placeholder="Prénom" class="form-control">
         </div>
 
         <div class="flex-vertical strech">
           <label for="last-name">Nom</label>
-          <input type="text" name="last-name" id="last-name" placeholder="Nom" class="form-control" required>
+          <input type="text" name="last-name" id="last-name" placeholder="Nom" class="form-control">
         </div>
       </div>
 
       <div class="flex-horizontal strech">
         <div class="flex-vertical strech">
           <label for="email">Adresse courriel</label>
-          <input type="email" name="email" id="email" placeholder="Adresse Courriel" class="form-control" required>
+          <input type="email" name="email" id="email" placeholder="Adresse Courriel" class="form-control">
         </div>
 
         <div class="flex-vertical strech">
           <label for="phone">Numéro de téléphone</label>
-          <input type="tel" name="phone" id="phone" pattern="[0-9]*" placeholder="###-###-####" class="form-control"
-            required>
+          <input type="tel" name="phone" id="phone" placeholder="###-###-####" class="form-control">
         </div>
       </div>
 
@@ -66,14 +68,13 @@
       <div class="flex-horizontal strech">
         <div class="flex-vertical strech">
           <label for="credit-card">Numéro de carte de crédit</label>
-          <input type="text" name="credit-card" id="credit-card" pattern="[0-9]{16}" maxlength="16" class="form-control"
-            required>
+          <input type="text" name="credit-card" id="credit-card" class="form-control">
         </div>
 
         <div class="flex-vertical strech">
           <label for="month">Date d'expiration</label>
-          <input type="text" name="expiration-date" id="expiration-date" pattern="[0-1][0-9]/[0-3][0-9]" class="form-control"
-            maxlength="5" placeholder="MM/JJ" required>
+          <input type="text" name="expiration-date" id="expiration-date"  class="form-control"
+             placeholder="MM/AA">
         </div>
       </div>
 
@@ -86,6 +87,8 @@
   <footer>
     <p>Travail réalisé par Gregory Fournier(1624509) et Laurent Hénault-Brunet(1749295)</p>
   </footer>
+  <script type="text/javascript" src="./assets/js/order.js"></script>
+  <script type="text/javascript" src="./assets/js/header.js"></script>
 </body>
 
 </html>
