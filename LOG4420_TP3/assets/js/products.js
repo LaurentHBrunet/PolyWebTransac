@@ -51,7 +51,7 @@ function showData(data) {
     var $link = $("<a href=\"product.html?id=" + value.id + "\" class=\"hover-gray flex-vertical product-container\"></a>");
     $link.append("<h2>" + value.name + "</h2>")
     .append("<img src=\"assets/img/" + value.image + "\" alt=\"apple-tv\">")
-    .append("<p>" + value.price + "</p>");
+    .append("<p>" + value.price.toString().replace(".", ",") + "$</p>");
     $("#products-list").append($link);
       });
 }
@@ -65,10 +65,10 @@ function sortData(data) {
             return data.sort(function(a, b){return a.price-b.price});
         }
         case "name-ascending": {
-            return data.sort(function(a, b){return ((a.name < b.name) ? -1 : ((a.name > b.name) ? 1 : 0));});
+            return data.sort(function(a, b){return ((a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : ((a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : 0));});
         }
         case "name-descending": {
-            return data.sort(function(a, b){return ((b.name < a.name) ? -1 : ((b.name > a.name) ? 1 : 0));});
+            return data.sort(function(a, b){return ((b.name.toLowerCase() < a.name.toLowerCase()) ? -1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? 1 : 0));});
         }
     }
 }

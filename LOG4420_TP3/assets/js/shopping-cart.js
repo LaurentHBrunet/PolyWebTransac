@@ -21,14 +21,31 @@ $(document).ready(function () {
 function showShoppingCart(data) {
     products = data;
     var cart = getCart();
+    var arrayIds = new Array();
 
+    //Sort cart
+    for (var id in cart) {
+        arrayIds.push(id);
+    }
 
-    // TODO sort cart
+    arrayIds.sort(function(id1, id2) {
+        if (products.find(x => x.id == id1).name < products.find(x => x.id == id2).name) {
+            return -1;
+        }
+        if (products.find(x => x.id == id1).name > products.find(x => x.id == id2).name) {
+            return 1;
+        }
+        return 0;
+    });
+
     if (cart != null) {
         $(".shopping-cart-table").removeClass("invisible");
         $(".shopping-cart-footer").removeClass("invisible");
-        $.each(cart, function (key, value) {
-            var product = products.find(x => x.id == key);
+
+        $.each(arrayIds, function(index, productId) {
+            var product = products.find(x => x.id == productId);
+            var productQuantity = cart[productId];
+
             var row = $("<tr></tr>");
             row.attr('id', product.id);
             
@@ -36,23 +53,23 @@ function showShoppingCart(data) {
             var xColumn = newTd().append("<button>X</button>");
             $(xColumn).find("button").addClass("remove-item-button");
             row.append(xColumn);
-            setupRemoveItemButton(row, key);
+            setupRemoveItemButton(row, productId);
 
             // link
             row.append(newLink(product));
             // price
             var priceColumn = newTd();
-            priceColumn.addClass("price");
-            priceColumn.text(product.price);
+            priceColumn.addClass("unit-price");
+            priceColumn.text(product.price.toString().replace(".", ",") + "$");;
             row.append(priceColumn);
             // quantity
-            var quantityColumn = newQuantityColumn(value);
+            var quantityColumn = newQuantityColumn(productQuantity );
             row.append(quantityColumn);
-            setupQuantityColumnButtons(row, key); 
+            setupQuantityColumnButtons(row, productId); 
 
             // total
-            totalPrice += parseInt(value * product.price);
-            row.append("<td class=\"price\")>" + parseFloat(value * product.price).toFixed(2) + " $</td>")
+            totalPrice += parseInt(productQuantity * product.price);
+            row.append("<td class=\"price\")>" + parseFloat(productQuantity * product.price).toFixed(2).replace(".",",") + "$</td>")
             $(".shopping-cart-table").append(row);
         });
         $("tr").last().addClass("table-footer");
@@ -76,7 +93,7 @@ function newLink(product) {
 }
 
 function newQuantityColumn(quantity) {
-    return $("<td><button class=\"remove-quantity-button\">-</button>" + "<span class=\"product-quantity\">" +  quantity + "</span><button class=\"add-quantity-button\">+</button></td>");
+    return $("<td><button class=\"remove-quantity-button\">-</button>" + "<span class=\"quantity\">" +  quantity + "</span><button class=\"add-quantity-button\">+</button></td>");
 }
 
 function updateTotalPrice(total) {
@@ -87,7 +104,7 @@ function updateTotalPrice(total) {
         totalPrice += value * product.price;
     });
     
-    $(".shopping-cart-total").html("Total: <strong id=\"total-amount\">" + totalPrice.toFixed(2) + " $</strong>");
+    $(".shopping-cart-total").html("Total: <strong id=\"total-amount\">" + totalPrice.toFixed(2).toString().replace(".",",") + "</strong>");
 }
 
 function setupRemoveItemButton(row, productId) {
@@ -136,7 +153,7 @@ function setupQuantityColumnButtons(row, cartProductKey) {
 }
 
 function updateProductQuantity(row, newProductQuantity, productKey) {
-    $(row).find(".product-quantity").html(newProductQuantity);
+    $(row).find(".quantity").html(newProductQuantity);
 
     if (newProductQuantity == 1) {
         $(row).find(".remove-quantity-button").attr("disabled", true);
@@ -145,7 +162,7 @@ function updateProductQuantity(row, newProductQuantity, productKey) {
     }
 
     let updatedProductPrice = products.find(x => x.id == productKey).price * newProductQuantity;
-    $(row).find(".price").html(updatedProductPrice.toFixed(2) + "$");
+    $(row).find(".price").html(updatedProductPrice.toFixed(2).toString().replace(".",",") + "$");
     updateTotalPrice();
     updateCartBadge();
 }

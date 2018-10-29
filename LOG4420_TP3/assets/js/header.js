@@ -8,7 +8,9 @@ $(document).ready(function() {
 function updateCartBadge() {
     var cart = getCart();
     if (cart != null) {
-        $("#count").addClass("count");
+        // $("#count").addClass("count");
+        $("#count").removeClass("invisible");
+        // $("#count").removeAttr("hidden");
         var total = 0;
         $.each(cart, function(key, value) {
             total += parseInt(value);
@@ -20,8 +22,11 @@ function updateCartBadge() {
         }
     } else {
         // Hide cart badge
-        $("#count").text("");
-        $("#count").removeClass("count");
+        $("#count").addClass("invisible");
+        // $("#count").addAttr("hidden");
+        // $("#count").text("");
+
+        // $("#count").removeClass("count");
     }
 }
 

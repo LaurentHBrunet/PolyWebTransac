@@ -21,7 +21,7 @@ $().ready(function() {
                 required: true,
                 creditcard: true
             },
-            "expiration-date": {
+            "credit-card-expiry": {
                 required: true,
                 creditCardExpiration: true 
             }
@@ -37,7 +37,7 @@ $().ready(function() {
             },
             "email": {
                 required: "Ce champ est obligatoire.",
-                email: "Veuillez fournir une adresse courriel valide."
+                email: "Veuillez fournir une adresse électronique valide."
             },
             "phone": {
                 required: "Ce champ est obligatoire.",
@@ -47,7 +47,7 @@ $().ready(function() {
                 required: "Ce champ est obligatoire.",
                 creditcard: "Veuillez fournir un numéro de carte de crédit valide."
             },
-            "expiration-date": {
+            "credit-card-expiry": {
                 required: "Ce champ est obligatoire."
             }
         }
@@ -57,7 +57,7 @@ $().ready(function() {
 jQuery.validator.addMethod("creditCardExpiration", function(value, element) {
     var pattern =  /^(0[1-9]|1[0-2])\/([0-9][0-9])$/
     return pattern.test(value);
-}, "La date d’expiration de votre carte de crédit est invalide.");
+}, "La date d'expiration de votre carte de crédit est invalide.");
 
 $("#order-form").submit(() => {
     if($("#order-form").valid()) {

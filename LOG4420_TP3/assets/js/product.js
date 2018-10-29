@@ -21,11 +21,11 @@ $(document).ready(function() {
             $.each( product.features, function( key, value ) {
                 $("#product-features").append("<li>" + value + "</li>");
             });
-            $("#product-price").append("Prix: <strong>" + product.price + "</strong>");
+            $("#product-price").append("Prix: <strong>" + product.price.toString().replace(".",",") + "$</strong>");
         } else {
             // Show Error Message
             $("main").empty();
-            $("main").append("<h1>Page Non Trouvée</h1>");
+            $("main").append("<h1>Page non trouvée!</h1>");
         }
     });
 
@@ -46,7 +46,6 @@ $(document).ready(function() {
         updateCartBadge();
 
         showProductAddedSnackbar();
-        //alert(localStorage.getItem(CART));
     });
 })
 
