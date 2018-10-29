@@ -1,6 +1,4 @@
-Deux membres : 5h
+Deux membres : 10h
 
-todo : 
-liste de produits affichage weird s'il y a deux éléments sur la dernière ligne 3.3.2
 
 
