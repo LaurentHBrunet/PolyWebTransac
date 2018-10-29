@@ -6,6 +6,7 @@
   <title>OnlineShop - Produits</title>
   <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+  <script type="text/javascript" src="./assets/js/jquery-3.2.1.min.js"></script>
 </head>
 
 <body>
@@ -25,7 +26,7 @@
             <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
             <i class="fa fa-shopping-cart fa-stack-1x"></i>
           </span>
-          <span class="count">3</span>
+          <span id="count" class="count"></span>
         </a>
       </nav>
     </div>
@@ -36,19 +37,19 @@
       <aside class="flex25">
         <div id="product-categories" class="btn-group">
           <p>Catégories</p>
-          <button class="hover-gray">Appareils photo</button>
-          <button class="hover-gray">Consoles</button>
-          <button class="hover-gray">Écrans</button>
-          <button class="hover-gray">Ordinateurs</button>
-          <button  class="selected hover-gray">Tous les produits</button>
+          <button class="hover-gray" value="cameras">Appareils photo</button>
+          <button class="hover-gray" value="consoles">Consoles</button>
+          <button class="hover-gray" value="screens">Écrans</button>
+          <button class="hover-gray" value="computers">Ordinateurs</button>
+          <button  class="selected hover-gray" value="all">Tous les produits</button>
         </div>
 
         <div id="product-criteria" class="btn-group">
           <p>Classement</p>
-          <button class="selected hover-gray">Prix (bas-haut)</button>
-          <button class="hover-gray">Prix (haut-bas)</button>
-          <button class="hover-gray">Nom (A-Z)</button>
-          <button class="hover-gray">Nom (Z-A)</button>
+          <button class="selected hover-gray" value="price-ascending">Prix (bas-haut)</button>
+          <button class="hover-gray" value="price-descending">Prix (haut-bas)</button>
+          <button class="hover-gray" value="name-ascending">Nom (A-Z)</button>
+          <button class="hover-gray" value="name-descending">Nom (Z-A)</button>
         </div>
       </aside>
 
@@ -56,46 +57,9 @@
         <div class="flex-vertical full-width">
           <div class="products-title-container flex-horizontal">
             <h1>Produits</h1>
-            <p>6 produits</p>
+            <p id="products-count">6 produits</p>
           </div>
-
-          <div class="flex-wrap-space-between flex-horizontal">
-            <a href="product.html" class="hover-gray flex-vertical product-container">
-              <h2>Apple TV</h2>
-              <img src="assets/img/apple-tv.png" alt="apple-tv">
-              <p>249.99</p>
-            </a>
-
-            <a href="product.html" class="hover-gray flex-vertical product-container">
-              <h2>Cannon EOS 5D Mark II</h2> 
-              <img src="assets/img/camera-1.png" alt="cannon EOS 5D Mark II">
-              <p>2999.99</p>
-            </a>
-
-            <a href="product.html" class="hover-gray flex-vertical product-container">
-              <h2>Nikon D7000</h2>
-              <img src="assets/img/camera-2.png" alt="Nikon D7000">
-              <p>549.99</p>
-            </a>
-
-            <a href="product.html" class="hover-gray flex-vertical product-container">
-              <h2>Canon PowerShot SD1300</h2>
-              <img src="assets/img/camera-3.png" alt="Canon PowerShot SD1300">
-              <p>299.99</p>
-            </a>
-
-            <a href="product.html" class="hover-gray flex-vertical product-container">
-              <h2>Portable</h2>
-              <img src="assets/img/laptop-1.png" alt="Portable">
-              <p>699.99</p>
-            </a>
-
-            <a href="product.html" class="hover-gray flex-vertical product-container">
-              <h2>Portable professionnel</h2>
-              <img src="assets/img/laptop-2.png" alt="Portable professionnel">
-              <p>599.99</p>
-            </a>
-
+          <div id="products-list" class="flex-wrap-space-between flex-horizontal">
           </div>
         </div>
       </div>
@@ -107,5 +71,7 @@
     <p>Travail réalisé par Gregory Fournier(1624509) et Laurent Hénault-Brunet(1749295)</p>
   </footer>
 </body>
+<script type="text/javascript" src="./assets/js/header.js"></script>
+<script type="text/javascript" src="./assets/js/products.js"></script>
 
 </html>
