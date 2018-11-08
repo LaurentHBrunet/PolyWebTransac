@@ -33,6 +33,7 @@ onlineShop.productsService = ($ => {
    * @returns {jquery.promise}  A promise that contains the product associated with the ID specified.
    */
   self.getProduct = productId => {
+    console.log("TODO implement get Product");
     return $.get("/api/products/" + productId).then(product => product, () => null);
   };
 

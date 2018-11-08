@@ -2,6 +2,36 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/assets/css/default.css')
+    meta(charset='UTF-8')
+    link(rel='stylesheet', type='text/css', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', type='text/css', href='/assets/css/style.css')
+    script(type='text/javascript', src='/assets/js/jquery-3.2.1.min.js')
   body
+    header
+      .header-container
+        .logo
+          a(href='./')
+            img(alt='logo', src='/assets/img/logo.svg', title='Accueil')
+        nav
+            ul
+                li
+                    a(href='/accueil') Accueil
+                li
+                    a(href='/produits') Produits
+                li
+                    a(href='/contact') Contact
+                li
+                  a.shopping-cart(href='/panier', title='Panier')
+                      span.fa-stack.fa-lg
+                          i.fa.fa-circle.fa-stack-2x.fa-inverse
+                          i.fa.fa-shopping-cart.fa-stack-1x
+                      span.count 3
+                script.
+                  $('a[href="/#{activeNav}"]').parent().addClass("active");
     block content
+    footer
+      p Par Antoine Béland et Konstantinos Lambrou-Latreille
+    script(type='text/javascript', src='/assets/scripts/utils.js')
+    script(type='text/javascript', src='/assets/scripts/shopping-cart.service.js')
+    script(type='text/javascript', src='/assets/scripts/shopping-cart.controller.js')
+    block scripts
