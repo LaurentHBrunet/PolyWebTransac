@@ -4,7 +4,12 @@ const app = express();
 
 // Load products
 
+var categories = ["cameras", "computers", "consoles", "screens", null];
+var criteria = ["price-asc", "price-dsc", "alpha-asc", "alpha-dsc", null];
+
 var products = require("../public/products.json");
+var db = require("../lib/db");
+
 
 router.get(["/", "/accueil"], (req, res) => {
   res.render("index", { title: "Accueil", activeNav: "accueil" });
@@ -34,6 +39,68 @@ router.get("/confirmation", (req, res) => {
   res.render("confirmation", { title: "Confirmation", activeNav: "none" });
 });
 
+// Products API
+
+// 1. GET: Get all products
+router.get("/api/products", (req, res, next) => {
+  // Check if valid request
+  if (categories.findIndex(function (value, index, arr) {
+    return value == req.query.category;
+  }) == -1 || criteria.findIndex(function (value, index, arr) {
+    return value == req.query.criteria;
+  }) == -1) {
+    res.status(400);
+    res.end();
+  } else {
+    db.getProducts(req.query.category, req.query.criteria).then((products) => {
+      res.send(products);
+      res.end();
+    });
+  }
+});
+// 2. GET: Get Product by Id
+router.get("/api/products/:id", (req, res) => {
+  db.getProductById(req.params.id).then((product) => {
+    if (product == null) {
+      res.status(404);
+    } else {
+      res.send(product);
+    }
+    res.end();
+  });
+});
+// 3. POST: Add new Item
+router.post("/api/products", (req, res) => {
+  db.addProduct(req.query.id, req.query.name, req.query.price, req.query.image,
+    req.query.category, req.query.description, req.query.features).then(function (err, one, two) {
+      res.status(201);
+      res.end();
+    }).catch((err) => {
+      res.status(400);
+      res.end();
+    });
+});
+// 4. DELETE: Delete product
+router.delete("/api/products/:id", (req, res) => {
+  db.removeProduct(req.params.id).exec(function (err, item) {
+    if (err || !item) {
+      res.status(404);
+    } else {
+      res.status(204);
+    }
+    res.end();
+  });
+});
+// 5. DELETE. Delete all products
+router.delete("/api/products/:id", (req, res) => {
+  db.removeAllProducts(req.params.id).exec(function (err, item) {
+    res.status(204);
+    res.end();
+  });
+});
+
+
+
 // Shopping cart API
 
 // 1. Get shopping Cart
@@ -47,7 +114,6 @@ router.get("/api/shopping-cart", (req, res, next) => {
 });
 // 2. Get Product
 router.get("/api/shopping-cart/:id", (req, res) => {
-  console.log(req.params.id);
   if (!req.session.cart || req.session.cart.length == 0) {
     res.status(404);
     res.end();
@@ -69,19 +135,20 @@ router.post("/api/shopping-cart", (req, res, next) => {
   } else {
     req.session.cart = [];
   }
-  // check if item exists
-  // check if product is already in cart, return 400
-  if (getProduct(req.query.productId) == null || getProductFromCart(req.session.cart, id) != null) {
-    res.status(400);
-    res.end();
-  } else {
-  var product = new Product(req.query.productId, req.query.quantity);
-  console.log(product);
-  req.session.cart.push(product);
-  res.send(req.session.cart);
-  res.status(201);
-  res.end();
-  }
+  // TODO check if qunatity ios a number
+  db.getProductById(req.query.productId).then(function (product) {
+    if (product == null || getProductFromCart(req.session.cart, req.query.productId) != null) {
+      res.status(400);
+      res.end();
+    } else {
+      var product = new Product(req.query.productId, req.query.quantity);
+      req.session.cart.push(product);
+      res.send(req.session.cart);
+      res.status(201);
+      res.end();
+    }
+  });
+
 });
 // 4. PUT: Modify existing item in cart
 router.put("/api/shopping-cart/:id", (req, res) => {
@@ -90,12 +157,32 @@ router.put("/api/shopping-cart/:id", (req, res) => {
     res.status(404)
     res.end();
   } else {
+    // TODO check if qunatity ios a number
     product.quantity = req.query.quantity;
     res.status(204);
-    // Todo remove debugging
-    res.send(req.session.cart);
+    res.end();
+
+  }
+});
+// 5. DELETE: Remove item from shopping cart
+router.delete("/api/shopping-cart/:id", (req, res) => {
+  var product = getProductFromCart(req.session.cart, req.params.id);
+  if (product == null) {
+    res.status(404)
+    res.end();
+  } else {
+    req.session.cart = req.session.cart.filter(function (value, index, arr) {
+      value.productId != product.productId;
+    });
+    res.status(204);
     res.end();
   }
+});
+// 6. DELETE: Remove whole shopping cart
+router.delete("/api/shopping-cart/", (req, res) => {
+  req.session.cart = [];
+  res.status(204);
+  res.end();
 });
 
 
@@ -110,22 +197,20 @@ class Product {
 
 // Utils
 
-function getProduct(id) {
-  products.forEach(function (product) {
-    if (product.id == id) {
-      console.log("Found product with id " + id + ": " + product);
-      return product;
-    }
+/*function getProduct(id) {
+  return products.find(function (element) {
+    return element.id == id;
   });
-  return null;
-}
+}*/
 
 function getProductFromCart(cart, id) {
-  cart.forEach(function (product) {
-    if (product.id == id) {
-      console.log("Found product with id " + id + ": " + product);
-      return product;
-    }
+  return cart.find(function (element) {
+    return element.productId == id;
   });
-  return null;
+}
+
+function removeFromCart(cart, product) {
+  cart = cart.filter(function (value, index, arr) {
+    value.productId != product.productId;
+  });
 }
