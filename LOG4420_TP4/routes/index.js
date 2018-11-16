@@ -106,11 +106,10 @@ router.delete("/api/products/", (req, res) => {
 
 // 1. Get shopping Cart
 router.get("/api/shopping-cart", (req, res, next) => {
-  if (req.session.cart) {
-    res.send(req.session.cart);
-  } else {
-    res.write("[]");
+  if (!req.session.cart) {
+    req.session.cart = new Array();
   }
+  res.send(req.session.cart);
   res.end();
 });
 // 2. Get Product
@@ -134,35 +133,41 @@ router.get("/api/shopping-cart/:id", (req, res) => {
 router.post("/api/shopping-cart", (req, res, next) => {
   if (req.session.cart) {
   } else {
-    req.session.cart = [];
+    req.session.cart = new Array();
   }
-  // TODO check if qunatity ios a number
-  db.getProductById(req.query.productId).then(function (product) {
-    if (product == null || getProductFromCart(req.session.cart, req.query.productId) != null) {
+  var newProduct = req.body;
+  db.getProductById(newProduct.productId).then(function (product) {
+    if (!Number.isInteger(newProduct.quantity) || product == null || getProductFromCart(req.session.cart, newProduct.productId) != null) {
       res.status(400);
       res.end();
     } else {
-      var product = new Product(req.query.productId, req.query.quantity);
+      var product = new Product(newProduct.productId, newProduct.quantity);
       req.session.cart.push(product);
-      res.send(req.session.cart);
       res.status(201);
       res.end();
     }
+  }).catch((err) => {
+    res.status(400);
+    res.end();
   });
 
 });
 // 4. PUT: Modify existing item in cart
 router.put("/api/shopping-cart/:id", (req, res) => {
-  var product = getProductFromCart(req.session.cart, req.params.id);
-  if (product == null) {
-    res.status(404)
+  if (!Number.isInteger(req.body.quantity)) {
+    res.status(400);
     res.end();
   } else {
-    // TODO check if qunatity ios a number
-    product.quantity = req.query.quantity;
-    res.status(204);
-    res.end();
-
+    var product = getProductFromCart(req.session.cart, req.body.productId);
+    if (product == null) {
+      res.status(404)
+      res.end();
+    } else {
+      // TODO check if qunatity ios a number
+      product.quantity = req.body.quantity;
+      res.status(204);
+      res.end();
+    }
   }
 });
 // 5. DELETE: Remove item from shopping cart

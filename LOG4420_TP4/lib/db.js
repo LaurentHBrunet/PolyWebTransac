@@ -77,7 +77,6 @@ module.exports = {
     return promise;
   },
   addProduct : function addProduct(id, name, price, image, category, description, features) {
-
     var newProduct = new ProductDBO();
     newProduct.id = id;
     newProduct.name = name;
@@ -87,7 +86,6 @@ module.exports = {
     newProduct.description = description;
     newProduct.features = features;
     return ProductDBO.create(newProduct)
-
   },
   removeProduct : function removeProduct(id) {
     return ProductDBO.findOneAndRemove({id: id }); 
