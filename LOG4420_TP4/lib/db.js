@@ -24,7 +24,17 @@ const Product = new Schema({
     required: true
   },
   description: {type: String, required: true},
-  features: {type: [String], required: true},
+  features: {
+    type: [String],
+    validate: {
+      validator: function(arr) {
+        return (arr.length > 0 &&
+          arr.findIndex((value,index,arr) => {return value == "";}) == -1);
+      }
+    },
+     required: true
+
+  },
 }, { collection: 'produits' }, { versionKey: false });
 
 var OrderDBO = mongoose.model("Order", Order);
@@ -67,6 +77,7 @@ module.exports = {
     return promise;
   },
   addProduct : function addProduct(id, name, price, image, category, description, features) {
+
     var newProduct = new ProductDBO();
     newProduct.id = id;
     newProduct.name = name;
@@ -76,6 +87,7 @@ module.exports = {
     newProduct.description = description;
     newProduct.features = features;
     return ProductDBO.create(newProduct)
+
   },
   removeProduct : function removeProduct(id) {
     return ProductDBO.findOneAndRemove({id: id }); 
@@ -92,8 +104,8 @@ module.exports = {
 
 
 
-
-
+// Mlab username password
+// LoG4420_1624509
 // LoG4420_1624509_TP4
 
 // DB User credentials  

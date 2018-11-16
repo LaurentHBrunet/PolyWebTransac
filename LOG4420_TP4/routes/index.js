@@ -70,9 +70,10 @@ router.get("/api/products/:id", (req, res) => {
   });
 });
 // 3. POST: Add new Item
-router.post("/api/products", (req, res) => {
-  db.addProduct(req.query.id, req.query.name, req.query.price, req.query.image,
-    req.query.category, req.query.description, req.query.features).then(function (err, one, two) {
+router.post("/api/products/", (req, res) => {
+  var product = req.body;
+  db.addProduct(product.id, product.name, product.price, product.image,
+    product.category, product.description, product.features).then(function (err, one, two) {
       res.status(201);
       res.end();
     }).catch((err) => {
@@ -92,8 +93,8 @@ router.delete("/api/products/:id", (req, res) => {
   });
 });
 // 5. DELETE. Delete all products
-router.delete("/api/products/:id", (req, res) => {
-  db.removeAllProducts(req.params.id).exec(function (err, item) {
+router.delete("/api/products/", (req, res) => {
+  db.removeAllProducts().exec(function (err, item) {
     res.status(204);
     res.end();
   });
