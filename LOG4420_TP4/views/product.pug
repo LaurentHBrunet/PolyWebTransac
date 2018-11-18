@@ -3,19 +3,19 @@ extends layout.pug
 block content
     main
         article
-            h1#product-name Produit
+            h1#product-name= product.name
             .row
                 .col
-                    img#product-image(alt='product', src='#')
+                    img#product-image(alt='product', src= "/assets/img/" + product.image)
                 .col
                     section
                         h2 Description
-                        p#product-desc
+                        p#product-desc= product.description
                     section
                         h2 Caractéristiques
                         ul#product-features
                     hr
-                    form#add-to-cart-form.pull-right
+                    form#add-to-cart-form.pull-right(data-product-id= product.id)
                         label(for='product-quantity') Quantité:
                         input#product-quantity.form-control(type='number', value='1', min='1')
                         button.btn(title='Ajouter au panier', type='submit')
@@ -23,7 +23,7 @@ block content
                             |   Ajouter
                     p
                         | Prix: 
-                        strong#product-price
+                        strong#product-price= product.price
             #dialog.dialog
                 | Le produit a été ajouté au panier.
 block scripts

@@ -20,7 +20,10 @@ router.get("/produits", (req, res) => {
 });
 
 router.get("/produits/:id", (req, res) => {
-  res.render("product", { title: "Produit", activeNav: "produits", product: req.params.id });
+  db.getProductById(req.params.id).then((product) => {
+    res.render("product", { title: "Produit", activeNav: "produits", product: product });
+  })
+  
 });
 
 router.get("/contact", (req, res) => {
@@ -158,7 +161,7 @@ router.put("/api/shopping-cart/:id", (req, res) => {
     res.status(400);
     res.end();
   } else {
-    var product = getProductFromCart(req.session.cart, req.body.productId);
+    var product = getProductFromCart(req.session.cart, req.params.id);
     if (product == null) {
       res.status(404)
       res.end();
