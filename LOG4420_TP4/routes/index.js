@@ -19,11 +19,11 @@ router.get("/produits", (req, res) => {
   res.render("products", { title: "Produits", activeNav: "produits" });
 });
 
-router.get("/produits/:id", (req, res) => {
+router.get("/produits/:id", (req, res) => { 
   db.getProductById(req.params.id).then((product) => {
     res.render("product", { title: "Produit", activeNav: "produits", product: product });
   })
-  
+
 });
 
 router.get("/contact", (req, res) => {
@@ -31,7 +31,8 @@ router.get("/contact", (req, res) => {
 });
 
 router.get("/panier", (req, res) => {
-  res.render("shopping-cart", { title: "Shopping Cart", activeNav: "none" });
+  console.log(req.session.cart);
+  res.render("shopping-cart", { title: "Shopping Cart", activeNav: "none", cart: req.session.cart });
 });
 
 router.get("/commande", (req, res) => {

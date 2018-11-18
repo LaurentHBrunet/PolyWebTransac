@@ -41,7 +41,7 @@ onlineShop.shoppingCartService = (($, productsService) => {
    *
    * @returns {jquery.promise}    A promise that contains the list of items in the shopping cart.
    */
-  self.getItems = () => {
+  self.getItems = () => { 
     return $.when(productsService.getProducts("alpha-asc"), _getItemsFromAPI()).then((products, items) => {
       function getItemAssociatedWithProduct(productId) {
         return items.find(item => item.productId === productId);
@@ -65,6 +65,7 @@ onlineShop.shoppingCartService = (($, productsService) => {
    * @return {jquery.promise}     A promise that contrains the item associated with the ID specified.
    */
   self.getItem = productId => {
+    productId = parseInt(productId);
     return self.getItems().then(items => {
       return items.find(item => item.product.id === productId)
     });

@@ -54,7 +54,7 @@ var onlineShop = onlineShop || {};
       dialog.fadeIn();
       setTimeout(() => dialog.fadeOut(), 5000);
 
-      _updateCount();
+      _updateCount(); 
       shoppingCartService.getItemQuantity(productId).done(quantity => $("#shopping-cart-quantity").text(quantity));
     });
   });
@@ -63,6 +63,8 @@ var onlineShop = onlineShop || {};
   $(".shopping-cart-table > tbody >  tr").each(function() {
     const rowElement = $(this);
     const productId = +rowElement.attr("data-product-id");
+    console.log("Entering table script");
+    console.log(productId);
 
     // Updates the quantity for a specific item and update the view.
     function updateQuantity(quantity) {
@@ -73,6 +75,7 @@ var onlineShop = onlineShop || {};
 	  });
       rowElement.find(".quantity").text(quantity);
       shoppingCartService.getItem(productId).done(item => {
+        console.log("Found product: " + item);
         rowElement.find(".price").html(utils.formatPrice(item.product["price"] * quantity));
       });
     }

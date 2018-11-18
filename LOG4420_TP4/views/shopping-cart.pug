@@ -14,6 +14,19 @@ block content
                             th Quantité
                             th Prix
                     tbody
+                    script.
+                        cart.forEach(item => {
+                            console.log("Item id" + item.productId);
+                            onlineShop.productsService.getProduct(item.productId).then( (product) => {
+                                console.log(product);
+                                var row = "<tr></tr>";
+                                $(row).attr("data-product-id", item.id);
+                                $(row).append("<th></th>");
+                                $("tbody").append(row);
+                            });
+                            
+                        });
+
                 p.shopping-cart-total
                     | Total: 
                     strong#total-amount
