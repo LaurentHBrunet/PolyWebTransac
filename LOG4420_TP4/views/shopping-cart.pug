@@ -1,11 +1,12 @@
 extends layout.pug
 
 block content
+    - var total = 0;
     main
         article
             h1 Panier
 
-            if (cart == null)
+            if (cart == null || cart.length == 0)
                 p Aucun produit dans le panier.
             else 
                 #shopping-cart-container
@@ -19,25 +20,26 @@ block content
                                 th Prix
                         tbody
                         each item in productsArray
-                            tr
+                            tr(data-product-id= item.id)
                                 td
                                     button.remove-item-button X
                                 td  
                                     span #{item.name}
                                 td
-                                    span prix #{item.price}
+                                    span #{item.price}$
                                 td 
                                     button.remove-quantity-button -
-                                    span #{item.quantity}
+                                    span.quantity #{item.quantity}
                                     button.add-quantity-button +
                                 td
-                                    span Prix #{item.price * item.quantity}
-                                    
+                                    span.price #{item.price * item.quantity}
+                                - total += item.price * item.quantity;
 
 
                     p.shopping-cart-total
                         | Total: 
-                        strong#total-amount
+                        strong#total-amount #{total} 
+                        
                     a.btn.pull-right(href='/order')
                         | Commander 
                         i.fa.fa-angle-double-right
