@@ -14,53 +14,63 @@ var db = require("../lib/db");
 
 router.get(["/", "/accueil"], (req, res) => {
   var cartCount = countItemsInCart(req.session.cart);
-  res.render("index", { title: "Accueil", activeNav: "accueil", cartCount: cartCount});
+  res.render("index", { title: "Accueil", activeNav: "accueil", cartCount: cartCount });
 });
 
 router.get("/produits", (req, res) => {
   var cartCount = countItemsInCart(req.session.cart);
   db.getProducts().then((products) => {
-    res.render("products", { title: "Produits", activeNav: "produits", products: products, cartCount: cartCount});
+    res.render("products", { title: "Produits", activeNav: "produits", products: products, cartCount: cartCount });
   });
 });
 
-router.get("/produits/:id", (req, res) => { 
+router.get("/produits/:id", (req, res) => {
   var cartCount = countItemsInCart(req.session.cart);
   db.getProductById(req.params.id).then((product) => {
-    if(product == null) {
-      res.render("product", {title: "Non trouve", activeNav: "produits", product: null, cartCount: cartCount});
+    if (product == null) {
+      res.render("product", { title: "Non trouve", activeNav: "produits", product: null, cartCount: cartCount });
     } else {
-      res.render("product", { title: "Produit", activeNav: "produits", product: product, cartCount: cartCount});
+      res.render("product", { title: "Produit", activeNav: "produits", product: product, cartCount: cartCount });
     }
   })
 });
 
 router.get("/contact", (req, res) => {
   var cartCount = countItemsInCart(req.session.cart);
-  res.render("contact", { title: "Contact", activeNav: "contact", cartCount: cartCount});
+  res.render("contact", { title: "Contact", activeNav: "contact", cartCount: cartCount });
 });
 
 router.get("/panier", (req, res) => {
   var cartCount = countItemsInCart(req.session.cart);
-
   var productsArray = new Array();
-  for (var i = 0; i < req.session.cart; i++) {
-    db.getProductById(req.session.cart[i].productId).then((product) => {
+  var promises = [];
+  var cart = req.session.cart;
+  for (var i = 0; i < req.session.cart.length; i++) {
+    promises.push(db.getProductById(req.session.cart[i].productId).then((product) => {
+      product.quantity = cart.find((value,index,arr) => {
+        return value.productId == product.id;
+      }).quantity;
       productsArray.push(product);
-    })
-  } 
-  res.render("shopping-cart", { title: "Shopping Cart", activeNav: "none", cart: req.session.cart, cartCount: cartCount, productsArray: productsArray});
+    }));
+  }
+  
+  Promise.all(promises).then((allProducts) => {
+    console.log(productsArray);
+    console.log("Lets go");
+    res.render("shopping-cart", { title: "Shopping Cart", activeNav: "none", cart: cart, cartCount: cartCount, productsArray: productsArray });
+  })
+
 });
 
 router.get("/commande", (req, res) => {
   var cartCount = countItemsInCart(req.session.cart);
-  res.render("order", { title: "Order", activeNav: "none", cartCount: cartCount});
+  res.render("order", { title: "Order", activeNav: "none", cartCount: cartCount });
 });
 
 router.post("/confirmation", (req, res) => {
   var name = req.body["first-name"] + " " + req.body["last-name"];
 
-  res.render("confirmation", { title: "Confirmation", activeNav: "none", name: name, cartCount: 0}); 
+  res.render("confirmation", { title: "Confirmation", activeNav: "none", name: name, cartCount: 0 });
 });
 
 // Products API
@@ -156,8 +166,7 @@ router.get("/api/shopping-cart/:id", (req, res) => {
 });
 // 3. POST Item
 router.post("/api/shopping-cart", (req, res, next) => {
-  if (req.session.cart == null)
-  {
+  if (req.session.cart == null) {
     req.session.cart = new Array();
   }
   console.log(req.session.cart);
@@ -230,7 +239,7 @@ router.get("/api/orders", (req, res) => {
 // 2. GET get order by id
 router.get("/api/orders/:id", (req, res) => {
   db.getOrder(req.params.id).then((order) => {
-    if(order.length > 0) {
+    if (order.length > 0) {
       res.send(order[0]);
     } else {
       res.status(404);
@@ -243,12 +252,12 @@ router.get("/api/orders/:id", (req, res) => {
 router.post("/api/orders/", (req, res) => {
   var order = req.body;
   db.addOrder(order.id, order.firstName, order.lastName, order.email, order.phone, order.products).then(function (err, one, two) {
-      res.status(201);
-      res.end();
-    }).catch((err) => {
-      res.status(400);
-      res.end();
-    });
+    res.status(201);
+    res.end();
+  }).catch((err) => {
+    res.status(400);
+    res.end();
+  });
 });
 
 // 4. Delete delete order by id
@@ -304,7 +313,7 @@ function countItemsInCart(cart) {
     return 0;
   }
   var count = 0;
-  for(var i = 0; i < cart.length; i++) {
+  for (var i = 0; i < cart.length; i++) {
     count += cart[i].quantity;
   }
   return count;

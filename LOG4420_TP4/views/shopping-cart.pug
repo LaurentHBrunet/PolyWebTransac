@@ -18,20 +18,20 @@ block content
                                 th Quantité
                                 th Prix
                         tbody
-                        each product in cart
+                        each item in productsArray
                             tr
                                 td
                                     button.remove-item-button X
                                 td  
-                                    //- span !{productsArray[product.productId].name}
+                                    span #{item.name}
                                 td
-                                    span prix
+                                    span prix #{item.price}
                                 td 
                                     button.remove-quantity-button -
-                                    span 1
+                                    span #{item.quantity}
                                     button.add-quantity-button +
                                 td
-                                    span Prix
+                                    span Prix #{item.price * item.quantity}
                                     
 
 
