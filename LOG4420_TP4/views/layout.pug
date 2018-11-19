@@ -27,7 +27,7 @@ html
                           i.fa.fa-shopping-cart.fa-stack-1x
                       
                       if(cartCount > 0) 
-                        span.count.visible= cartCount
+                        span.count.visible #{cartCount <100 ? cartCount : "99+"}
                       else
                         span.count
                 script.

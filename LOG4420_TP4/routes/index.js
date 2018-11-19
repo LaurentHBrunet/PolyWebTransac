@@ -213,7 +213,7 @@ router.delete("/api/shopping-cart/:id", (req, res) => {
     res.end();
   } else {
     req.session.cart = req.session.cart.filter(function (value, index, arr) {
-      value.productId != product.productId;
+      return value.productId != product.productId;
     });
     res.status(204);
     res.end();
