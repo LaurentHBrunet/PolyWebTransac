@@ -27,45 +27,27 @@ const Order = new Schema(
     },
     products: {
       type: Array,
-      validate: {
-        validator: function(v) {
+      validate: { validator: function(v) {
           for (var i = 0; i < v.length; i++) {
             if (
               typeof v[i].id != "number" ||
               typeof v[i].quantity != "number"
             ) {
               return false;
-            }
-
+            } 
             if (v[i].quantity <= 0) {
               return false;
             }
-
-            return true;
-            // return new Promise( function(resolve, reject) {
-            //   db.getProductById(v[i].id).then((product) => { 
-            //     if (product == null) {
-            //       resolve(false);
-            //     } else {
-            //       resolve(true);
-            //     }
-            //   })
-            // });
-            // return db.getProductById(v[i].id).exec(function(err, product) {
-            //   console.log("test2222");
-            // });
-            // return new Promise(function(resolve, reject) {
-            //     console.log("test");
-            //     resolve(true);
-            // })
           }
-        }
-      }
+          return true;
+        }, msg: 'Wrong formatting of products' },
     }
   },
   { collection: "orders" },
   { versionKey: false }
 );
+
+
 
 const Product = new Schema(
   {

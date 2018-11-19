@@ -45,18 +45,21 @@ router.get("/panier", (req, res) => {
   var productsArray = new Array();
   var promises = [];
   var cart = req.session.cart;
-  for (var i = 0; i < req.session.cart.length; i++) {
-    promises.push(db.getProductById(req.session.cart[i].productId).then((product) => {
-      product.quantity = cart.find((value,index,arr) => {
-        return value.productId == product.id;
-      }).quantity;
-      productsArray.push(product);
-    }));
+  if(req.session.cart != null)  {
+    for (var i = 0; i < req.session.cart.length; i++) {
+      promises.push(db.getProductById(req.session.cart[i].productId).then((product) => {
+        product.quantity = cart.find((value,index,arr) => {
+          return value.productId == product.id;
+       }).quantity;
+       productsArray.push(product);
+      }));
+    }
   }
   
   Promise.all(promises).then((allProducts) => {
-    console.log(productsArray);
-    console.log("Lets go");
+    productsArray.sort((a, b) => {
+      return a.name.toLowerCase() > b.name.toLowerCase();
+    });
     res.render("shopping-cart", { title: "Shopping Cart", activeNav: "none", cart: cart, cartCount: cartCount, productsArray: productsArray });
   })
 
@@ -143,7 +146,6 @@ router.get("/api/shopping-cart", (req, res, next) => {
   if (req.session.cart == null) {
     req.session.cart = new Array();
   }
-  console.log(req.session.cart);
   res.send(req.session.cart);
   res.end();
 });
@@ -169,7 +171,6 @@ router.post("/api/shopping-cart", (req, res, next) => {
   if (req.session.cart == null) {
     req.session.cart = new Array();
   }
-  console.log(req.session.cart);
   var newProduct = req.body;
   db.getProductById(newProduct.productId).then(function (product) {
     if (!Number.isInteger(newProduct.quantity) || product == null || getProductFromCart(req.session.cart, newProduct.productId) != null) {
@@ -252,8 +253,19 @@ router.get("/api/orders/:id", (req, res) => {
 router.post("/api/orders/", (req, res) => {
   var order = req.body;
   db.addOrder(order.id, order.firstName, order.lastName, order.email, order.phone, order.products).then(function (err, one, two) {
-    res.status(201);
-    res.end();
+    db.getProducts().then((products) => {
+      for(var i = 0; i < order.products.length; i++) {
+        if (products.findIndex(function (value,index,array) {
+          return value.id == order.products[i].id;
+        }) == -1) {
+          res.status(400);
+          res.end();
+          return;
+        }
+      }
+      res.status(201);
+      res.end();
+    });
   }).catch((err) => {
     res.status(400);
     res.end();

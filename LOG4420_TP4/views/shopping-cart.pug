@@ -2,6 +2,8 @@ extends layout.pug
 
 block content
     - var total = 0;
+    - function format(price) { return price.toFixed(2).replace(".", ",") + "$"}
+    - function formatAmount(price) { return price.toFixed(2).replace(".", ",")};
     main
         article
             h1 Panier
@@ -26,21 +28,24 @@ block content
                                 td  
                                     span #{item.name}
                                 td
-                                    span #{item.price}$
+                                    span #{format(item.price)}
                                 td 
-                                    button.remove-quantity-button -
+                                    if(item.quantity == 1)
+                                        button.remove-quantity-button(disabled="true") -
+                                    else
+                                        button.remove-quantity-button -
                                     span.quantity #{item.quantity}
                                     button.add-quantity-button +
                                 td
-                                    span.price #{item.price * item.quantity}
+                                    span.price #{format(item.price * item.quantity)}
                                 - total += item.price * item.quantity;
 
 
                     p.shopping-cart-total
                         | Total: 
-                        strong#total-amount #{total} 
+                        strong#total-amount #{formatAmount(total)} 
                         
-                    a.btn.pull-right(href='/order')
+                    a.btn.pull-right(href='/commande')
                         | Commander 
                         i.fa.fa-angle-double-right
                     button#remove-all-items-button.btn
