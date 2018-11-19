@@ -54,14 +54,15 @@ var onlineShop = onlineShop || {};
       </div>`);
   }
 
+
   // Initialize the products view.
   $("#product-categories").children().click(e => {
     filters.category = $(e.target).attr("data-category");
     productsService.getProducts(filters.sortingCriteria, filters.category).done(_updateView);
   });
+ 
   $("#product-criteria").children().click(e => {
     filters.sortingCriteria = $(e.target).attr("data-criteria");
     productsService.getProducts(filters.sortingCriteria, filters.category).done(_updateView);
   });
-
 })(jQuery, onlineShop.productsService, onlineShop.utils);

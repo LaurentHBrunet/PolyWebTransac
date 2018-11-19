@@ -25,7 +25,11 @@ html
                       span.fa-stack.fa-lg
                           i.fa.fa-circle.fa-stack-2x.fa-inverse
                           i.fa.fa-shopping-cart.fa-stack-1x
-                      span.count 3
+                      
+                      if(cartCount > 0) 
+                        span.count.visible= cartCount
+                      else
+                        span.count
                 script.
                   $('a[href="/#{activeNav}"]').parent().addClass("active");
     block content

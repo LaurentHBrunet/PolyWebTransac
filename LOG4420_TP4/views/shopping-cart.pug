@@ -4,37 +4,45 @@ block content
     main
         article
             h1 Panier
-            #shopping-cart-container
-                table.table.shopping-cart-table
-                    thead
-                        tr
-                            th
-                            th Produit
-                            th Prix unitaire
-                            th Quantité
-                            th Prix
-                    tbody
-                    script.
-                        cart.forEach(item => {
-                            console.log("Item id" + item.productId);
-                            onlineShop.productsService.getProduct(item.productId).then( (product) => {
-                                console.log(product);
-                                var row = "<tr></tr>";
-                                $(row).attr("data-product-id", item.id);
-                                $(row).append("<th></th>");
-                                $("tbody").append(row);
-                            });
-                            
-                        });
 
-                p.shopping-cart-total
-                    | Total: 
-                    strong#total-amount
-                a.btn.pull-right(href='./order.html')
-                    | Commander 
-                    i.fa.fa-angle-double-right
-                button#remove-all-items-button.btn
-                    i.fa.fa-trash-o
-                    |   Vider le panier
+            if (cart == null)
+                p Aucun produit dans le panier.
+            else 
+                #shopping-cart-container
+                    table.table.shopping-cart-table
+                        thead
+                            tr
+                                th
+                                th Produit
+                                th Prix unitaire
+                                th Quantité
+                                th Prix
+                        tbody
+                        each product in cart
+                            tr
+                                td
+                                    button.remove-item-button X
+                                td  
+                                    //- span !{productsArray[product.productId].name}
+                                td
+                                    span prix
+                                td 
+                                    button.remove-quantity-button -
+                                    span 1
+                                    button.add-quantity-button +
+                                td
+                                    span Prix
+                                    
+
+
+                    p.shopping-cart-total
+                        | Total: 
+                        strong#total-amount
+                    a.btn.pull-right(href='/order')
+                        | Commander 
+                        i.fa.fa-angle-double-right
+                    button#remove-all-items-button.btn
+                        i.fa.fa-trash-o
+                        |   Vider le panier
 block scripts
     script(type='text/javascript', src='/assets/scripts/products.service.js')

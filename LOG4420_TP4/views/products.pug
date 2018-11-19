@@ -1,6 +1,7 @@
 extends layout.pug
 
 block content
+    - function format(price) { return price.toFixed(2).replace(".", ",") + "$"}
     main
         section.sidebar(aria-label='Filtres')
             section
@@ -10,18 +11,28 @@ block content
                     button(data-category='consoles') Consoles
                     button(data-category='screens') Écrans
                     button(data-category='computers') Ordinateurs
-                    button(data-category='all') Tous les produits
+                    button(class ="selected" data-category='all') Tous les produits
             section
                 h2 Classement
                 #product-criteria.btn-group.vertical
                     button(data-criteria='price-asc') Prix (bas-haut)
                     button(data-criteria='price-dsc') Prix (haut-bas)
-                    button(data-criteria='alpha-asc') Nom (A-Z)
+                    button(class="selected" data-criteria='alpha-asc') Nom (A-Z)
                     button(data-criteria='alpha-dsc') Nom (Z-A)
         article
-            span#products-count.right-header 13 produits
+            span#products-count.right-header #{products.length} produits
             h1 Produits
-            #products-list.products
-            .loading
+            #products-list.products  
+                each product in products
+                    div(class="product" data-product-id=product.id) 
+                        a(href="./produits/" + product.id title="En savoir plus...")
+                            h2 !{product.name}
+                            img(alt="product" src="../assets/img/" + product.image)
+                            p.price #[small Prix] !{format(product.price)}
+                                
+
+
+
+
 block scripts
     script(type='text/javascript', src='./assets/scripts/products.controller.js')
