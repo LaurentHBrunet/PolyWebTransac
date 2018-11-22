@@ -4,6 +4,8 @@ import { Product } from '../products.service'
 import { ProductsService } from '../products.service'
 import { ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { ShoppingCartService } from 'app/shopping-cart.service';
+import { CartProduct } from 'app/shopping-cart.service';
 
 
 /**
@@ -25,7 +27,10 @@ export class ProductComponent implements OnInit {
    *
    * @param route                   The active route.
    */
-  constructor(private route: ActivatedRoute, private productsService: ProductsService, private http: HttpClient) { 
+  constructor(private route: ActivatedRoute,
+              private productsService: ProductsService, 
+              private http: HttpClient,
+              private shoppingCartService: ShoppingCartService) { 
   }
 
   /**
@@ -40,20 +45,41 @@ export class ProductComponent implements OnInit {
 
 
   addToCart() {
+    this.shoppingCartService.getCart().then((cart :[]) => {
+      for (var i = 0; i < cart.length; i++) {
+        var cartProduct : CartProduct = cart[i];
+        if (cartProduct.productId == this.currentProduct.id) {
+          this.shoppingCartService.modifyProductQuantity(this.currentProduct.id, cartProduct.quantity + Number(this.productCount.nativeElement.value)).then(() => {
+            this.confirmation();
+            this.shoppingCartService.getCart().then((cart) => {
+              console.log(this.shoppingCartService.countCart(cart));
+              //UPDATE COUNT
+            });
+          }).catch((err) => {
+            console.log(err);
+          });
+
+          return;
+        }
+      }
+
+      this.shoppingCartService.addProductToCart(this.currentProduct.id, Number(this.productCount.nativeElement.value)).then((product) => {
+        this.confirmation();
+        this.shoppingCartService.getCart().then((cart) => {
+            console.log(this.shoppingCartService.countCart(cart));
+            //update count
+        });
+      }).catch((err) => {
+        console.log(err); 
+      });
+    });
+  }
+
+  confirmation() {
     this.showConfirmation = true;
     setTimeout(() => {
       this.showConfirmation = false;
     }, 5000);
-    
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const options = { headers: headers, withCredentials: true };
-
-    console.log(this.currentProduct.id + " " + this.productCount.nativeElement.value);
-
-    this.http.post('http://localhost:3000/api/shopping-cart', JSON.stringify({
-      productId: this.currentProduct.id,
-      quantity: Number(this.productCount.nativeElement.value)
-    }), options).subscribe();
   }
 }
 
