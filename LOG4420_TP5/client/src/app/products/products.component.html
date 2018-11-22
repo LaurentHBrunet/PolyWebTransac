@@ -2,20 +2,20 @@
   <section>
     <h2>Catégories</h2>
     <div class="btn-group vertical" id="product-categories">
-      <button (click)="getCameras($event)">Appareils photo</button>
-      <button (click)="getConsoles($event)">Consoles</button>
-      <button (click)="getScreens()">Écrans</button>
-      <button (click)="getComputers()">Ordinateurs</button>
-      <button (click)="getAll()" class="selected">Tous les produits</button>
+      <button #camerasButton (click)="getCameras()">Appareils photo</button>
+      <button #consolesButton (click)="getConsoles()">Consoles</button>
+      <button #screensButton (click)="getScreens()">Écrans</button>
+      <button #computersButton (click)="getComputers()">Ordinateurs</button>
+      <button #allButton (click)="getAll()" class="selected">Tous les produits</button>
     </div>
   </section>
   <section>
     <h2>Classement</h2>
     <div class="btn-group vertical" id="product-criteria">
-      <button (click)="getPriceAsc()" class="selected">Prix (bas-haut)</button>
-      <button (click)="getPriceDsc()">Prix (haut-bas)</button>
-      <button (click)="getAlphaAsc()">Nom (A-Z)</button>
-      <button (click)="getAlphaDsc()">Nom (Z-A)</button>
+      <button #priceAscButton (click)="getPriceAsc()" class="selected">Prix (bas-haut)</button>
+      <button #priceDscButton (click)="getPriceDsc()">Prix (haut-bas)</button>
+      <button #alphaAscButton (click)="getAlphaAsc()">Nom (A-Z)</button>
+      <button #alphaDscButton (click)="getAlphaDsc()">Nom (Z-A)</button>
     </div>
   </section>
 </section>
