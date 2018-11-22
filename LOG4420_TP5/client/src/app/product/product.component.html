@@ -1,38 +1,37 @@
 <article>
-  <h1 id="product-name">Manette Xbox 360</h1>
-  <div class="row">
+  <h1 *ngIf="!currentProduct">Page non trouvée!</h1>  
+
+  <h1 *ngIf="currentProduct" id="product-name">{{ currentProduct?.name }}</h1>
+  <div *ngIf="currentProduct" class="row">
     <div class="col">
-      <img id="product-image" alt="Manette Xbox 360" src="./assets/img/xbox-controller.png">
+      <img id="product-image" alt="{{ currentProduct?.name }}" src="./assets/img/{{ currentProduct?.image }}">
     </div>
     <div class="col">
       <section>
         <h2>Description</h2>
-        <p id="product-desc">
-          Manette pouvant être branchée à une console Xbox 360 et un PC. Cette manette vous permettra de jouer à vos jeux vidéo préférés.
-          De plus, cette manette est sans fil et comporte un port pour casque d'écoute.
+        <p id="product-desc" [innerHTML]="currentProduct?.description">
         </p>
       </section>
       <section>
         <h2>Caractéristiques</h2>
         <ul id="product-features">
-          <li>Manette sans fil 2.4GHz avec adapteur USB</li>
-          <li>Compacte et ergonomique</li>
-          <li>Port pour casque d'écoute pour Xbox Live</li>
+          <li *ngFor="let feature of currentProduct?.features" [innerHTML]="feature"></li>
         </ul>
       </section>
       <hr>
       <form class="pull-right" id="add-to-cart-form">
         <label for="product-quantity">Quantité:</label>
-        <input class="form-control" id="product-quantity" name="product-quantity"
+        <input #productCount class="form-control" id="product-quantity" name="product-quantity"
                type="number" value="1" min="1" required>&nbsp;
-        <button class="btn" title="Ajouter au panier" type="submit">
+        <button (click)="addToCart()" class="btn" title="Ajouter au panier" type="submit">
           <i class="fa fa-cart-plus"></i>&nbsp; Ajouter
         </button>
       </form>
-      <p>Prix: <strong id="product-price">29,99&thinsp;$</strong></p>
+      <p>Prix: <strong id="product-price"> {{ currentProduct?.price | formatPrice }}&thinsp;$</strong></p>
     </div>
   </div>
-  <div class="dialog" id="dialog" *ngIf="false">
+
+  <div #confirmationDiv class="dialog" id="dialog" *ngIf="showConfirmation">
     Le produit a été ajouté au panier.
   </div>
 </article>
