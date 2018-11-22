@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Config } from './config';
+import { Subject } from 'rxjs';
 
 
 export class CartProduct {
@@ -13,22 +14,18 @@ export class CartProduct {
   providedIn: 'root'
 })
 export class ShoppingCartService {
+  cartCount: Number;
+
+  cartCountChange: Subject<Number> = new Subject<Number>();
 
   constructor(private http: HttpClient) { 
   }
 
-/*
-  addProductToCart(id: Number, quantity: Number) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const options = { headers: headers, withCredentials: true };
-
-    this.http.post('http://localhost:3000/api/shopping-cart', JSON.stringify({
-      productId: id, 
-      quantity: quantity 
-    }), options).subscribe();
-  
+  updateCartCount(newCount: Number) {
+    this.cartCount = newCount;
+    this.cartCountChange.next(this.cartCount);
   }
-*/
+
   addProductToCart(id: Number, quantity: Number) {
     const url = `${Config.apiUrl}/shopping-cart/`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -66,6 +63,7 @@ export class ShoppingCartService {
       count += cart[i].quantity;
     }
 
+    this.updateCartCount(count);
     return count;
   }
 }
