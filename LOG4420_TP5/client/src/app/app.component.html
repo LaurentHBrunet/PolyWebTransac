@@ -22,7 +22,8 @@
                 <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
                 <i class="fa fa-shopping-cart fa-stack-1x"></i>
               </span>
-            <span class="count">6</span>
+            <span *ngIf="cartCount == 0" class="count" hidden></span>
+            <span *ngIf="cartCount > 0" class="count">{{ cartCount }}</span>
           </a>
         </li>
       </ul>
