@@ -26,7 +26,7 @@ export class ProductsComponent {
   criteriaButtons: ElementRef[];
 
   products: Product[];
-  classifierState: ClassifierState;
+  classifierState: ClassifierState; 
   
   ngAfterViewInit() {
     this.categoryButtons = [this.camerasButton, this.consolesButton, this.screensButton, this.computersButton, this.allButton];
