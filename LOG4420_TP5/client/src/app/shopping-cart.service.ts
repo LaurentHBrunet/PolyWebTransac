@@ -57,6 +57,22 @@ export class ShoppingCartService {
     return this.http.get(url, options).toPromise() 
   }
 
+  deleteCartItem(id: Number) {
+    const url = `${Config.apiUrl}/shopping-cart/${id}`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: true };
+
+    return this.http.delete(url, options).toPromise()
+  }
+
+  deleteCart() {
+    const url = `${Config.apiUrl}/shopping-cart/`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers, withCredentials: true };
+
+    return this.http.delete(url, options).toPromise() 
+  }
+
   countCart(cart) {
     var count = 0;
     for(var i = 0; i < cart.length; i++) {

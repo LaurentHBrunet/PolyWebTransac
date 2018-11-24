@@ -46,9 +46,10 @@ export class OrderComponent implements OnInit {
    * Submits the order form.
    */
   submit() {
-    if (!this.orderForm.valid()) {
+    /*if (!this.orderForm.valid()) {
       return;
-    }
+    }*/
     // TODO: Compléter la soumission des informations lorsque le formulaire soumis est valide.
+    console.log(this.orderForm);
   }
 }

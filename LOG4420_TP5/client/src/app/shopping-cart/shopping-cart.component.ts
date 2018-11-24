@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProductsService } from '../products.service'
 import { Product } from '../products.service'
+import { ShoppingCartService, CartProduct } from 'app/shopping-cart.service';
 
 /**
  * Defines the component responsible to manage the shopping cart page.
@@ -11,37 +12,51 @@ import { Product } from '../products.service'
 })
 export class ShoppingCartComponent {
   // TODO: À compléter
-  cart: any[] = [{"productId": 1, "quantity": 2},{"productId": 2, "quantity": 1}];
+  cart: CartProduct[] = [];
   products: Product[] = [];
   total: number = 0.0;
 
-  constructor(private productsService: ProductsService) {
-    this.productsService.getProduct(1).then((product1) => {
-      this.products[0] = product1;
-      this.productsService.getProduct(2).then((product2) => {
-        this.products[1] = product2;
-      }); 
-    }); 
+  constructor(private productsService: ProductsService, private shoppingCartService: ShoppingCartService) {
+    this.shoppingCartService.getCart().then((cart: []) => {
+      this.cart = cart;
+      this.cart.forEach((cartProduct, index, arr) => {
+        this.productsService.getProduct(cartProduct.productId).then((product) => {
+          this.products.push(product);
+        })
+      });
+    });
   }
 
   emptyCart() {
-    this.cart = [];
-    this.products = [];
+    this.shoppingCartService.deleteCart().then(_ => {
+      this.products = [];
+      this.cart = [];
+      this.updateCartCount();
+    });
   }
 
   removeQuantity(item) {
     var index = this.getCartItemIndex(item);
     this.cart[index].quantity--;
+    this.shoppingCartService.modifyProductQuantity(item.id, this.cart[index].quantity).then(_ => {
+      this.updateCartCount();
+    });
   }
 
   addQuantity(item) {
     var index = this.getCartItemIndex(item);
-    this.cart[index].quantity++;
+    this.cart[index].quantity++
+    this.shoppingCartService.modifyProductQuantity(item.id, this.cart[index].quantity).then(_ => {
+      this.updateCartCount();
+    });
   }
 
-  removeItem(item) {  
+  removeItem(item) {
     this.products = this.products.filter(product => product.id !== item.id);
-    this.cart = this.cart.filter(item => item.productId !== item.id);
+    this.cart = this.cart.filter(product => product.productId !== item.id);
+    this.shoppingCartService.deleteCartItem(item.id).then(_ => {
+      this.updateCartCount();
+    });
   }
 
   getCartItem(product) {
@@ -50,6 +65,12 @@ export class ShoppingCartComponent {
 
   getCartItemIndex(product) {
     return this.cart.findIndex(x => x.productId == product.id);
+  }
+
+  updateCartCount() {
+    this.shoppingCartService.getCart().then(cart => {
+      this.shoppingCartService.countCart(cart);
+    });
   }
 
   updateTotal() {

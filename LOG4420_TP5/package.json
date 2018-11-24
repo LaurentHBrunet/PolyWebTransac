@@ -21,5 +21,8 @@
     "random-number": "0.0.9",
     "request": "^2.88.0",
     "util": "^0.10.3"
+  },
+  "dependencies": {
+    "@types/jest": "^23.3.9"
   }
 }
