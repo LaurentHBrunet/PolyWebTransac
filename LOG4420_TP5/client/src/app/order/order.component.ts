@@ -60,11 +60,13 @@ export class OrderComponent implements OnInit {
     // Get nex order id
     this.ordersService.getOrders().then((orders) => {
       var newId;
+      console.log(orders);
       if (orders != null && orders.length != 0) {
         newId = orders[orders.length - 1].id + 1
       } else {
         newId = 1;
       }
+      console.log(newId);
       this.shoppingCartService.getCart().then((cart) => {
         var order = new Order();
         order.id = newId;
@@ -72,7 +74,7 @@ export class OrderComponent implements OnInit {
         order.lastName = this.getElementValue("last-name");
         order.email = this.getElementValue("email");
         order.phone = this.getElementValue("phone");
-        order.products = [] as [];
+        order.products = this.convertCartItems(cart) as [];
 
         console.log("Order to send");
         console.log(order);
@@ -89,6 +91,14 @@ export class OrderComponent implements OnInit {
   }
 
   getElementValue(name: string) {
-    return document.getElementsByName(name)[0].innerText;
+    return document.getElementsByName(name)[0].value;
+  }
+
+  convertCartItems(cart) {
+    var products = [];
+    cart.forEach(element => {
+      products.push({"id": element.productId, "quantity": element.quantity});
+    });
+    return products;
   }
 } 
