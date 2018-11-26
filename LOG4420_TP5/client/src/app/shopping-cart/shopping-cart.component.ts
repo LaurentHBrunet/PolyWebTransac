@@ -11,7 +11,6 @@ import { ShoppingCartService, CartProduct } from 'app/shopping-cart.service';
   templateUrl: './shopping-cart.component.html'
 })
 export class ShoppingCartComponent {
-  // TODO: À compléter
   cart: CartProduct[] = [];
   products: Product[] = [];
   total: number = 0.0;
@@ -19,10 +18,14 @@ export class ShoppingCartComponent {
   constructor(private productsService: ProductsService, private shoppingCartService: ShoppingCartService) {
     this.shoppingCartService.getCart().then((cart: []) => {
       this.cart = cart;
+      var tempProducts = [];
       this.cart.forEach((cartProduct, index, arr) => {
         this.productsService.getProduct(cartProduct.productId).then((product) => {
-          this.products.push(product);
+          tempProducts.push(product);
         })
+      });
+      this.products = tempProducts.sort(function(a, b) {
+        return a.name.toUpperCase() < b.name.toUpperCase() ? -1 : 1;
       });
     });
   }
