@@ -24,6 +24,7 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   ordersManager.createOrder(req.body).done(err => {
     if (err) {
+      console.log(err);
       res.status(400).send();
     } else {
       res.status(201).send();

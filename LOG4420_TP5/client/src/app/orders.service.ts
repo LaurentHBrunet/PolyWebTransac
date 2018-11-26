@@ -11,7 +11,7 @@ export class Order {
   lastName: String;
   email: String;
   phone: String;
-  products: [];
+  products: any[];
 }
 
 /**
@@ -19,6 +19,8 @@ export class Order {
  */
 @Injectable()
 export class OrdersService {
+  confirmationNumber;
+  orderName;
 
   /**
    * Handles the current error.
@@ -54,9 +56,19 @@ export class OrdersService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers, withCredentials: true };
 
-    return this.http.post(url, JSON.stringify(order), options)
+    this.confirmationNumber = order.id;
+    this.orderName = order.firstName + " " + order.lastName;
+
+
+    return this.http.post(url, JSON.stringify({
+      id: order.id,
+      firstName: order.firstName,
+      lastName: order.lastName,
+      email: order.email,
+      phone: order.phone,
+      products: order.products as []
+    }), options)
       .toPromise()
-      .then(orders => orders as Order[])
-      .catch(() => null);
+      .catch((err) => console.log(err));
   }
 }

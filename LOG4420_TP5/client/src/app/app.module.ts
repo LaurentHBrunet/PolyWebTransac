@@ -16,6 +16,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ProductsService } from './products.service';
 import { FormatPricePipe } from './format-price.pipe';
 import { ShoppingCartService } from './shopping-cart.service';
+import { OrdersService } from './orders.service';
 
 // Application routes
 const appRoutes: Routes = [
@@ -54,7 +55,8 @@ const appRoutes: Routes = [
   ],
   providers: [
     ProductsService,
-    ShoppingCartService
+    ShoppingCartService,
+    OrdersService
   ],
   bootstrap: [AppComponent]
 })
