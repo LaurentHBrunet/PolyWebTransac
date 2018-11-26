@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let product of products">
+      <tr *ngFor="let product of products" [attr.data-product-id]="product.id">
         <td>
           <button class="remove-item-button" (click)="removeItem(product)" title="Supprimer">
             <i class="fa fa-times"></i>
