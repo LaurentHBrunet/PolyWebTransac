@@ -14,8 +14,6 @@ export class ConfirmationComponent {
   orderName;
 
   constructor(private ordersService: OrdersService, private shoppingCartService: ShoppingCartService) { }
-  
-  
 
   /**
    * Occurs when the component is initialized.

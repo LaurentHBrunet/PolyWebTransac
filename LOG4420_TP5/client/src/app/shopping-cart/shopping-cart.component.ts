@@ -38,7 +38,7 @@ export class ShoppingCartComponent {
     });
   }
 
-  removeQuantity(item) {
+  removeQuantity(item: Product) {
     var index = this.getCartItemIndex(item);
     this.cart[index].quantity--;
     this.shoppingCartService.modifyProductQuantity(item.id, this.cart[index].quantity).then(_ => {
@@ -46,7 +46,7 @@ export class ShoppingCartComponent {
     });
   }
 
-  addQuantity(item) {
+  addQuantity(item: Product) {
     var index = this.getCartItemIndex(item);
     this.cart[index].quantity++
     this.shoppingCartService.modifyProductQuantity(item.id, this.cart[index].quantity).then(_ => {
@@ -54,7 +54,7 @@ export class ShoppingCartComponent {
     });
   }
 
-  removeItem(item) {
+  removeItem(item: Product) {
     this.products = this.products.filter(product => product.id !== item.id);
     this.cart = this.cart.filter(product => product.productId !== item.id);
     this.shoppingCartService.deleteCartItem(item.id).then(_ => {
@@ -62,11 +62,11 @@ export class ShoppingCartComponent {
     });
   }
 
-  getCartItem(product) {
+  getCartItem(product: Product) {
     return this.cart.find(x => x.productId == product.id);
   }
 
-  getCartItemIndex(product) {
+  getCartItemIndex(product: Product) {
     return this.cart.findIndex(x => x.productId == product.id);
   }
 

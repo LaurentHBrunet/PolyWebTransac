@@ -16,9 +16,7 @@ export class OrderComponent implements OnInit {
 
   orderForm: any;
 
-  constructor(private ordersService: OrdersService, private shoppingCartService: ShoppingCartService, private router: Router) {
-
-  }
+  constructor(private ordersService: OrdersService, private shoppingCartService: ShoppingCartService, private router: Router) { }
 
   /**
    * Occurs when the component is initialized.
@@ -57,7 +55,7 @@ export class OrderComponent implements OnInit {
     if (!this.orderForm.valid()) {
       return;
     }
-    // Get nex order id
+    // Get next order id
     this.ordersService.getOrders().then((orders) => {
       var newId;
       console.log(orders);
@@ -66,7 +64,6 @@ export class OrderComponent implements OnInit {
       } else {
         newId = 1;
       }
-      console.log(newId);
       this.shoppingCartService.getCart().then((cart) => {
         var order = new Order();
         order.id = newId;
@@ -75,10 +72,6 @@ export class OrderComponent implements OnInit {
         order.email = this.getElementValue("email");
         order.phone = this.getElementValue("phone");
         order.products = this.convertCartItems(cart) as [];
-
-        console.log("Order to send");
-        console.log(order);
-
 
         this.ordersService.addOrder(order).then(() => {
           console.log(order);
@@ -91,13 +84,13 @@ export class OrderComponent implements OnInit {
   }
 
   getElementValue(name: string) {
-    return document.getElementsByName(name)[0].value;
+    return (document.getElementsByName(name)[0] as HTMLInputElement).value;
   }
 
   convertCartItems(cart) {
     var products = [];
     cart.forEach(element => {
-      products.push({"id": element.productId, "quantity": element.quantity});
+      products.push({ "id": element.productId, "quantity": element.quantity });
     });
     return products;
   }
