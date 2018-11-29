@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../products.service'
 import { Product } from '../products.service'
 import { ShoppingCartService, CartProduct } from 'app/shopping-cart.service';
@@ -10,35 +10,53 @@ import { ShoppingCartService, CartProduct } from 'app/shopping-cart.service';
   selector: 'shopping-cart',
   templateUrl: './shopping-cart.component.html'
 })
-export class ShoppingCartComponent {
+export class ShoppingCartComponent implements OnInit {
   cart: CartProduct[] = [];
   products: Product[] = [];
   total: number = 0.0;
 
   constructor(private productsService: ProductsService, private shoppingCartService: ShoppingCartService) {
+
+  }
+
+  ngOnInit() {
     this.shoppingCartService.getCart().then((cart: CartProduct[]) => {
-      var tempProducts = [];
-      cart.forEach((cartProduct, index, arr) => {
-        this.productsService.getProduct(cartProduct.productId).then((product) => {
+      var tempProducts: Product[] = [];
+      this.productsService.getProducts().then((products) => {
+        cart.forEach((cartProduct, index, arr) => {
+          var product = products.find((value, index, arr) => {
+            return value.id == cartProduct.productId;
+          });
           tempProducts.push(product);
-        })
+        });
+
+        this.products = tempProducts.sort(function (a,b) {
+          var aName = a.name.toLowerCase() as String;
+          var bName = b.name.toLowerCase() as String;
+          if (aName < bName) {
+            return -1;
+          } else if (aName > bName) {
+            return 1;
+          } else {
+            return 0;
+          }
+
+        });
+        this.cart = cart;
       });
-      this.products = tempProducts.sort(function(a, b) {
-        return a.name.toUpperCase() - b.name.toUpperCase()
-      });
-      this.cart = cart;
+
     });
   }
 
   emptyCart() {
     if (confirm("Voulez vous vraiment vider le panier?")) {
       this.shoppingCartService.deleteCart().then(_ => {
-      this.products = [];
-      this.cart = [];
-      this.updateCartCount();
-    });
+        this.products = [];
+        this.cart = [];
+        this.updateCartCount();
+      });
     }
-    
+
   }
 
   removeQuantity(item: Product) {
@@ -60,10 +78,10 @@ export class ShoppingCartComponent {
   removeItem(item: Product) {
     if (confirm("Voulez vous vraiment supprimer " + item.name + "?")) {
       this.products = this.products.filter(product => product.id !== item.id);
-    this.cart = this.cart.filter(product => product.productId !== item.id);
-    this.shoppingCartService.deleteCartItem(item.id).then(_ => {
-      this.updateCartCount();
-    });
+      this.cart = this.cart.filter(product => product.productId !== item.id);
+      this.shoppingCartService.deleteCartItem(item.id).then(_ => {
+        this.updateCartCount();
+      });
     }
   }
 
