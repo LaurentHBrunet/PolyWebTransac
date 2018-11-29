@@ -16,26 +16,29 @@ export class ShoppingCartComponent {
   total: number = 0.0;
 
   constructor(private productsService: ProductsService, private shoppingCartService: ShoppingCartService) {
-    this.shoppingCartService.getCart().then((cart: []) => {
-      this.cart = cart;
+    this.shoppingCartService.getCart().then((cart: CartProduct[]) => {
       var tempProducts = [];
-      this.cart.forEach((cartProduct, index, arr) => {
+      cart.forEach((cartProduct, index, arr) => {
         this.productsService.getProduct(cartProduct.productId).then((product) => {
           tempProducts.push(product);
         })
       });
       this.products = tempProducts.sort(function(a, b) {
-        return a.name.toUpperCase() < b.name.toUpperCase() ? -1 : 1;
+        return a.name.toUpperCase() - b.name.toUpperCase()
       });
+      this.cart = cart;
     });
   }
 
   emptyCart() {
-    this.shoppingCartService.deleteCart().then(_ => {
+    if (confirm("Voulez vous vraiment vider le panier?")) {
+      this.shoppingCartService.deleteCart().then(_ => {
       this.products = [];
       this.cart = [];
       this.updateCartCount();
     });
+    }
+    
   }
 
   removeQuantity(item: Product) {
@@ -55,11 +58,13 @@ export class ShoppingCartComponent {
   }
 
   removeItem(item: Product) {
-    this.products = this.products.filter(product => product.id !== item.id);
+    if (confirm("Voulez vous vraiment supprimer " + item.name + "?")) {
+      this.products = this.products.filter(product => product.id !== item.id);
     this.cart = this.cart.filter(product => product.productId !== item.id);
     this.shoppingCartService.deleteCartItem(item.id).then(_ => {
       this.updateCartCount();
     });
+    }
   }
 
   getCartItem(product: Product) {

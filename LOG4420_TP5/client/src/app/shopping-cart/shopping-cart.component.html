@@ -21,7 +21,7 @@
         <td>
           <a routerLink="/produits/{{product?.id}}">{{product?.name}}</a>
         </td>
-        <td>{{product?.price | formatPrice}}</td>
+        <td>{{product?.price | formatPrice}}$</td>
         <td>
           <div class="row">
             <div class="col">
@@ -34,13 +34,13 @@
             </div>
           </div>
         </td>
-        <td class="price">{{product?.price * getCartItem(product).quantity | formatPrice}}</td>
+        <td class="price">{{product?.price * getCartItem(product).quantity | formatPrice}}$</td>
         {{updateTotal()}}
       </tr>
     </tbody>
   </table>
   <div *ngIf="products&&products.length > 0 ">
-    <p class="shopping-cart-total">Total: <strong id="total-amount">{{total | formatPrice}}</strong></p>
+    <p class="shopping-cart-total">Total: <strong id="total-amount">{{total | formatPrice}}$</strong></p>
     <a class="btn pull-right" routerLink="/commande">Commander <i class="fa fa-angle-double-right"></i></a>
     <button class="btn" (click)="emptyCart()" id="remove-all-items-button"><i class="fa fa-trash-o"></i>&nbsp; Vider le
       panier</button>

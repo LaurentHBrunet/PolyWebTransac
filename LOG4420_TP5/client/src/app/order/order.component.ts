@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrdersService, Order } from 'app/orders.service';
 import { ShoppingCartService } from 'app/shopping-cart.service';
 import { Router } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
 
 declare const $: any;
 
@@ -51,7 +52,7 @@ export class OrderComponent implements OnInit {
   /**
    * Submits the order form.
    */
-  submit() {
+  submit(orderForm: NgForm) {
     if (!this.orderForm.valid()) {
       return;
     }
@@ -67,10 +68,10 @@ export class OrderComponent implements OnInit {
       this.shoppingCartService.getCart().then((cart) => {
         var order = new Order();
         order.id = newId;
-        order.firstName = this.getElementValue("first-name");
-        order.lastName = this.getElementValue("last-name");
-        order.email = this.getElementValue("email");
-        order.phone = this.getElementValue("phone");
+        order.firstName = orderForm.controls["first-name"].value;
+        order.lastName = orderForm.controls["last-name"].value;
+        order.email = orderForm.controls["email"].value;
+        order.phone = orderForm.controls["phone"].value;
         order.products = this.convertCartItems(cart) as [];
 
         this.ordersService.addOrder(order).then(() => {
